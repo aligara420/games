@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Committee - Silicon Valley Chamber</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+
+        .hero {
+            --hero-offset: 0px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 150%;
+            background: linear-gradient(rgba(0, 102, 204, 0.8), rgba(255, 149, 0, 0.8)), url('./img/hero1.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            will-change: transform;
+            transform: translateY(var(--hero-offset, 0px));
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* CTA Buttons */
+        .cta-button {
+            background: #ff9500;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: #e6850e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .cta-button.primary {
+            background: #0066cc;
+        }
+
+        .cta-button.primary:hover {
+            background: #0056b3;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        /* Parallax Background Sections */
+        .benefits-section {
+            position: relative;
+            color: white;
+            padding: 4rem 2rem;
+            overflow: hidden;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+
+        .benefits-section {
+            --benefits-offset: 0px;
+        }
+
+        .benefits-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 150%;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./img/hero2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            will-change: transform;
+            transform: translateY(var(--benefits-offset, 0px));
+        }
+
+        .benefits-section .section-title,
+        .benefits-section .section-subtitle {
+            color: white;
+        }
+
+        .benefits-section .benefit-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Enhanced parallax effect with transform3d for better performance */
+        .hero, .benefits-section, .quick-start-parallax, .join-section {
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* Add some scroll-based animation */
+        @keyframes parallaxFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .countdown-item {
+            animation: parallaxFloat 3s ease-in-out infinite;
+        }
+
+        .countdown-item:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .countdown-item:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .countdown-item:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        .quick-start-parallax {
+            position: relative;
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 0;
+            margin: 0;
+            overflow: hidden;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+
+        .quick-start-parallax {
+            --quickstart-offset: 0px;
+        }
+
+        .quick-start-parallax::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 150%;
+            background: linear-gradient(rgba(0, 102, 204, 0.9), rgba(255, 149, 0, 0.9)), url('./img/hero3.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            will-change: transform;
+            transform: translateY(var(--quickstart-offset, 0px));
+        }
+
+        .quick-start-parallax h2,
+        .quick-start-parallax .step-title {
+            color: white;
+        }
+
+        .quick-start-parallax .step {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .join-section {
+            position: relative;
+            color: white;
+            padding: 4rem 2rem;
+            overflow: hidden;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+
+        .join-section {
+            --join-offset: 0px;
+        }
+
+        .join-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 150%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./img/hero4.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            will-change: transform;
+            transform: translateY(var(--join-offset, 0px));
+        }
+
+        .join-section .section-title,
+        .join-section .section-subtitle {
+            color: white;
+        }
+
+        .join-section .contact-info {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .benefit-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .benefit-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0066cc;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-description {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        /* Quick Start Section - now handled by parallax class */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .step-number {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            color: #0066cc;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer Link */
+        .footer-cta {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-cta a {
+            color: #ff9500;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-cta a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll;
+                min-height: 80vh;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .countdown {
+                gap: 0.5rem;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+                padding: 0.75rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            /* Disable parallax on mobile for performance */
+            .benefits-section,
+            .quick-start-parallax,
+            .join-section {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Silicon Valley Games Committee</h1>
+        <p>A once-in-a-generation opportunity to turn Super Bowl LX and FIFA World Cup 2026 into lasting local wins for Silicon Valley communities and businesses.</p>
+        
+        <!-- Countdown Timer -->
+        <div id="countdown-container">
+            <h3 style="margin-bottom: 1rem; font-size: 1.2rem; opacity: 0.9;">Super Bowl LX Countdown</h3>
+            <div class="countdown" id="superbowl-countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="sb-days">0</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="sb-hours">0</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="sb-minutes">0</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="sb-seconds">0</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <a href="#join" class="cta-button primary">Join the Committee</a>
+            <a href="#benefits" class="cta-button">See All Benefits</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Benefits Section -->
+        <section class="benefits-section" id="benefits">
+            <h2 class="section-title">Empower Your Business Through The Games</h2>
+            <p class="section-subtitle">
+                By participating, you can showcase your business, build lasting community connections, and help shape a legacy of growth and opportunity.
+            </p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <span class="benefit-icon">📖</span>
+                    <h3 class="benefit-title">The Games Magazine Guide</h3>
+                    <p class="benefit-description">Get featured in our comprehensive guide distributed to 50,000+ visitors across the region.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <span class="benefit-icon">🗺️</span>
+                    <h3 class="benefit-title">Event Map</h3>
+                    <p class="benefit-description">Your business highlighted on our official tourist-style map with GPS integration.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <span class="benefit-icon">📅</span>
+                    <h3 class="benefit-title">Games Calendar</h3>
+                    <p class="benefit-description">Your events listed in the master calendar seen by thousands of visitors.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <span class="benefit-icon">🏛️</span>
+                    <h3 class="benefit-title">Coalition Updates</h3>
+                    <p class="benefit-description">Access to exclusive meetings and insider updates from city officials and organizers.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <span class="benefit-icon">📢</span>
+                    <h3 class="benefit-title">Global Promotion</h3>
+                    <p class="benefit-description">Marketing reach across California and worldwide through our partner networks.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <span class="benefit-icon">🏆</span>
+                    <h3 class="benefit-title">Meet the Legends</h3>
+                    <p class="benefit-description">Connect with champions and icons through exclusive networking opportunities.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <span class="benefit-icon">🏙️</span>
+                    <h3 class="benefit-title">Visit Silicon Valley</h3>
+                    <p class="benefit-description">Help attract visitors to Silicon Valley instead of San Francisco - more local business!</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <span class="benefit-icon">⚽</span>
+                    <h3 class="benefit-title">Games & Celebrations Hub</h3>
+                    <p class="benefit-description">Featured on our public webpage showing visitors where to stay, eat, and play.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section class="quick-start-parallax">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Join This Once-in-a-Generation Opportunity</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">✨</div>
+                    <h3 class="step-title">Showcase Your Business</h3>
+                    <p>Get featured in our guides, maps, and promotional materials seen by thousands of visitors.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">🤝</div>
+                    <h3 class="step-title">Build Community Connections</h3>
+                    <p>Network with local entrepreneurs, civic leaders, and nonprofits through monthly roundtables.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">🌟</div>
+                    <h3 class="step-title">Shape Our Region's Legacy</h3>
+                    <p>Help bring global attention to Silicon Valley and create lasting opportunities for all.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#join" class="cta-button primary">Join Now - It's Free</a>
+            </div>
+        </section>
+
+        <!-- Join Section -->
+        <section class="join-section" id="join">
+            <h2 class="section-title">Ready to Turn Global Moments Into Lasting Local Wins?</h2>
+            <p class="section-subtitle">
+                This initiative is powered by the Silicon Valley Chamber's Games Committee — join us in this effort and tell us how YOU want to get involved.
+            </p>
+            
+            <div style="text-align: center;">
+                <div class="contact-info" style="padding: 2rem; border-radius: 12px; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: #0066cc; margin-bottom: 1rem;">Contact Information</h3>
+                    <p><strong>Committee Chairs:</strong> Jan Eric Nordmo, Kevin Moore, and Harbir K Bhatia</p>
+                    <p><strong>Phone:</strong> (408) 244-8244</p>
+                    <p><strong>Email:</strong> Info@theSVCC.org</p>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <a href="mailto:Info@theSVCC.org?subject=Games Committee - How I Want To Get Involved" class="cta-button primary" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">
+                        Tell Us How You Want To Get Involved
+                    </a>
+                </div>
+                
+                <p style="color: #666; font-size: 0.9rem;">
+                    Questions? Call us at (408) 244-8244 or email Info@theSVCC.org
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer CTA for Full Site -->
+    <div class="footer-cta">
+        <p>Want to see what a full dedicated Games Committee website could look like?</p>
+        <p><a href="./index.html">→ View Full Site Concept</a></p>
+    </div>
+
+    <script>
+        // Countdown Timer JavaScript
+        function updateCountdown() {
+            // Super Bowl LX - February 9, 2026, 6:30 PM EST
+            const targetDate = new Date('2026-02-09T18:30:00-05:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('sb-days').textContent = days;
+                document.getElementById('sb-hours').textContent = hours;
+                document.getElementById('sb-minutes').textContent = minutes;
+                document.getElementById('sb-seconds').textContent = seconds;
+            }
+        }
+
+        // Update countdown every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Working Parallax Effect using transform on pseudo-elements
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            
+            // Create CSS custom properties to control pseudo-element transforms
+            const hero = document.querySelector('.hero');
+            const benefits = document.querySelector('.benefits-section');
+            const quickStart = document.querySelector('.quick-start-parallax');
+            const joinSection = document.querySelector('.join-section');
+
+            if (hero) {
+                const heroSpeed = scrolled * 0.5;
+                hero.style.setProperty('--hero-offset', `${heroSpeed}px`);
+            }
+
+            if (benefits) {
+                const benefitsRect = benefits.getBoundingClientRect();
+                if (benefitsRect.top < window.innerHeight && benefitsRect.bottom > 0) {
+                    const benefitsSpeed = (scrolled - benefits.offsetTop) * 0.3;
+                    benefits.style.setProperty('--benefits-offset', `${benefitsSpeed}px`);
+                }
+            }
+
+            if (quickStart) {
+                const quickStartRect = quickStart.getBoundingClientRect();
+                if (quickStartRect.top < window.innerHeight && quickStartRect.bottom > 0) {
+                    const quickStartSpeed = (scrolled - quickStart.offsetTop) * 0.6;
+                    quickStart.style.setProperty('--quickstart-offset', `${quickStartSpeed}px`);
+                }
+            }
+
+            if (joinSection) {
+                const joinRect = joinSection.getBoundingClientRect();
+                if (joinRect.top < window.innerHeight && joinRect.bottom > 0) {
+                    const joinSpeed = (scrolled - joinSection.offsetTop) * 0.4;
+                    joinSection.style.setProperty('--join-offset', `${joinSpeed}px`);
+                }
+            }
+        }
+
+        // Throttled scroll for performance
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateParallax();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
